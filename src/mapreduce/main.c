@@ -20,6 +20,7 @@ struct arg_struct {
 }args;
 
 struct arg_struct args;
+struct arg_struct args1;
 
 struct reduce_struct{
     WordArray *boss1;
@@ -29,6 +30,8 @@ struct reduce_struct{
 struct reduce_struct Reduce;
 
 int current_line=0;
+int current_reduce=0;
+
 int n_lines=0;
 double height=0;
 void insert_sort(WordHash **arr,int n){
@@ -88,40 +91,21 @@ char * strlow(char *dirty_string){
 
 
 void * reduce(void *arguments){
+    printf("entra\n");
     struct reduce_struct *args = arguments;
-
-    // WordArray *wordboss=(WordArray *)args->arg1;
-    // char *line=(char *)args->arg2;
-
     WordArray *boss1=(WordArray*)args->boss1;
     WordArray *boss2=(WordArray*)args->boss2;
-
     int size1=boss1->size;
     int size2=boss2->size;
-
-
     bool shouldInsert=false;
     int position_found=0;
-
     WordHash **static_array=boss1->elements;
     WordHash **iterated_array=boss2->elements;
-
-    WordHash **temp=NULL;
-    // WordHash **wordarray=malloc(sizeof(WordHash));
-
-    // if(size>0){
-    //     wordarray=realloc(wordarray,sizeof(wordboss->elements));
-    //     wordarray=wordboss->elements;
-    //     size=wordboss->size;
-    // }
-    
-    
+    WordHash **temp=NULL;  
     int current_word=0;
     while(size2>0){
         char *word=iterated_array[current_word]->word;
-
         shouldInsert=true;
-
         // Iteramos sobre el array statico para ver si existe la palabra
         for(int w=0;w<size1;w++){
             // buscamso si la palabra ya exite
@@ -130,7 +114,6 @@ void * reduce(void *arguments){
                 shouldInsert=false;
                 position_found=w;
             }
-
         }
         if(shouldInsert){
             // inseratmos la palabra en al array
@@ -154,16 +137,11 @@ void * reduce(void *arguments){
             // debemos aumentar la frecuencia.
             static_array[position_found]->frequency+=1;
         }
-
         word=iterated_array[current_word++]->word;
         size2--;
     }
-
     insert_sort(static_array,size1);
-    // qsort(static_array,size,sizeof(WordHash),compare_function);
-    // args->accumulated_result=static_array;
     args->boss1->elements=static_array;
-    
     pthread_exit(args);
 }
 
@@ -173,21 +151,29 @@ void * reduce(void *arguments){
 // void * wordcounter(void *wordboss_void,void *line_void){
 
 void * wordcounter(void *arguments){
-    struct arg_struct *args = arguments;
+    struct arg_struct *args = (struct arg_struct*)arguments;
     WordArray *wordboss=(WordArray *)args->arg1;
-    char *line=(char *)args->arg2;
     int size=0;
+    char *line_not_void=(char *)args->arg2;
+    // char *line=strcpy();
+
+    int lineLength = strlen(line_not_void);
+    char *line = (char*) calloc(lineLength + 1, sizeof(char));
+    strncpy(line_not_void, line, lineLength);
+
     char delim[]=" ";
     char *context;
    
-    printf("Linea que entra %s \n",line);
+    // printf("Linea que entra %s \n",line);
     // printf("Linea que entra %p \n",wordboss[0]);
 
     int inputLength = strlen(line);
     char *inputCopy = (char*) calloc(inputLength + 1, sizeof(char));
     strncpy(inputCopy, line, inputLength);
+    line[inputLength]='\0';
 
-    char *word = strlow(strtok_r (inputCopy, delim, &context));
+    // char *word = strlow(strtok_r (line, delim, &context));
+    char *word = strtok_r (line, delim, &context);
 
     bool shouldInsert=false;
     int position_found=0;
@@ -195,7 +181,8 @@ void * wordcounter(void *arguments){
 
     WordHash **temp=NULL;
     WordHash **wordarray=malloc(sizeof(WordHash));
-    if(wordboss->size>0){
+    int boss_size=wordboss->size;
+    if(boss_size>0){
         wordarray=realloc(wordarray,sizeof(wordboss->elements));
         wordarray=wordboss->elements;
         size=wordboss->size;
@@ -244,7 +231,7 @@ void * wordcounter(void *arguments){
     insert_sort(wordarray,size);
     // qsort(wordarray,size,sizeof(WordHash),compare_function);
     wordboss->elements=wordarray;
-    wordboss->size=size;
+    wordboss->size=&size;
     // args->accumulated_result=wordarray;
     args->arg1=wordboss;
     
@@ -291,11 +278,14 @@ int main(int argc, char *argv[]) {
     rewind(input_file);
 
     int n_nodes;
+    int n_reduce;
     if (n_lines%2==0){
+        n_reduce=(int)(n_lines/2);
         n_nodes=(2*n_lines)-1;
         // Es par
     }
     else{
+        n_reduce=(int)((n_lines-1)/2)+1;
         n_nodes=(2*n_lines);
     }
     height=ceil(log2(n_nodes))-1;
@@ -311,23 +301,29 @@ int main(int argc, char *argv[]) {
     char *line=NULL;
     // int n_words=10;
     // WordHash **wordarray=init_array(n_words);
-    WordArray *boss=malloc(sizeof(WordArray));
+    
 
     // printf("value of wordhash %i \n",sizeof(WordHash));
 //  -4 es por el int de frequency.
     // int size_chars=sizeof(WordHash)-4;
 
 
-    pthread_t threads[n_lines];
-
+    pthread_t maps[n_lines];
     
+    pthread_t reduces[n_reduce];
+
+    WordArray *boss=malloc(sizeof(WordArray));
+    boss->size=0;
+    boss->elements=NULL;
     args.arg1=boss;
 
 	// pthread_attr_t attr;
 	// pthread_attr_init(&attr);
     // wordcounter(boss);
     
+
     bool ignore_next;
+
     while(true){
         if (height==0){
             printf("Se termino el arblo %i \n");
@@ -374,16 +370,28 @@ int main(int argc, char *argv[]) {
         }
         args.arg2=line;
         if((current_line>0) && ((current_line)%2==0)){
-            if( (pthread_join(threads[current_line-2], NULL)) && (pthread_join(threads[current_line-1], NULL)) ){
+            if( (pthread_join(maps[current_line-2], NULL)) && (pthread_join(maps[current_line-1], NULL)) ){
                 fprintf(stderr, "Error joining thread\n");
                 return 2;
             };
-            // thread_create(&threads[current_line], NULL, (void *)reduce, (void*)&args);
+
+            pthread_create(&reduces[current_reduce], NULL, (void *)reduce, (void*)&Reduce);
+            current_reduce++;
             // SE CREA UN THREAD DE REDUCE
             // Aca se deberia crear el 
         }
+        // caso donde el numero de MAPS es impar
+        else if((current_line>0) && (current_reduce==n_reduce-1)){
+             if((pthread_join(maps[current_line-1], NULL)) ){
+                fprintf(stderr, "Error joining thread\n");
+                return 2;
+            };
+            printf("Aca se crea un Reduce\n");
+            pthread_create(&reduces[current_reduce], NULL, (void *)reduce, (void*)&args);
+            current_reduce++;
+        }
         // SE CREA UN THREAD THE MAP
-        if(pthread_create(&threads[current_line], NULL, (void *)wordcounter, (void*)&args)) {
+        if(pthread_create(&maps[current_line], NULL, (void *)wordcounter, (void*)&args)) {
             fprintf(stderr, "Error creating thread\n");
             return 1;
         }
