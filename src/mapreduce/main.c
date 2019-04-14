@@ -117,7 +117,7 @@ void * reduce(void *arguments){
     
     
     int current_word=0;
-    while(){
+    while(size2>0){
         char *word=iterated_array[current_word]->word;
 
         shouldInsert=true;
