@@ -4,7 +4,7 @@
 #include <stdbool.h> 
 
 
-typedef struct{
+typedef struct WordHash{
     int frequency;
     // No hay palabras con mas de 100 characteres.
     // 49 -> se asignan 52 bytes para el array de chars
@@ -12,3 +12,13 @@ typedef struct{
     char word[49];
     
 }WordHash;
+
+typedef struct WordArray
+{
+    WordHash ** elements;
+    int size;
+}WordArray;
+
+
+WordHash ** init_array(int n_words);
+

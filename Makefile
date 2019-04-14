@@ -35,7 +35,7 @@ CFLAGS=-Wunused -Wall $(OPT)
 # Matemáticas (C Math library)
 MTH=-lm
 
-LIB=$(MTH)
+LIB=$(MTH) -lpthread
 
 ###############################################################################
 # MÓDULOS Y PROGRAMAS                                                         #
@@ -48,7 +48,7 @@ COMMON=
 PROGRAMS=mapreduce
 
 # Todos los directorios que contienen archivos de código
-SRCDIR=$(COMMON) $(PROGRAMS)
+SRCDIR=$(COMMON)$(PROGRAMS)
 
 ###############################################################################
 # DEPENDENCIAS Y DIRECTORIOS                                                  #
