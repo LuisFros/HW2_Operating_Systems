@@ -13,27 +13,31 @@
 
 #define MAXCHAR 50
 
-struct arg_struct {
-    WordArray *arg1;
-    char *arg2;
-    WordHash **accumulated_result;
-}args;
+typedef struct MapArgs {
+    WordArray *array;
+    char *line;
+    // WordHash **accumulated_result;
+}MapArgs;
 
-struct arg_struct args;
-struct arg_struct args1;
 
 struct reduce_struct{
     WordArray *boss1;
     WordArray *boss2;
-}Reduce;
+}ReduceArgs;
 
-struct reduce_struct Reduce;
+// struct reduce_struct Reduce;
 
 int current_line=0;
 int current_reduce=0;
 
 int n_lines=0;
 double height=0;
+
+void print_array(WordHash **array,int size){
+    for(int i=0;i<size;i++){
+        printf("WORD: %s | FREQ: %d \n",array[i]->word,array[i]->frequency);
+    }
+}
 void insert_sort(WordHash **arr,int n){
     // https://www.geeksforgeeks.org/insertion-sort/
     int i, j; 
@@ -51,7 +55,44 @@ void insert_sort(WordHash **arr,int n){
         arr[j + 1] = key; 
     } 
 }
-
+char * get_next_line(FILE * input_file){
+        bool ignore_next;
+        int c, index = 0;
+        int size=0;
+        char *temp=NULL;
+        char *line=NULL;
+        while ( (c = fgetc (input_file)) != EOF ){
+            if ( c == '\n'){
+                // Agregar ===' ' para una palabra
+                // Se termina una linea por el salto de linea.
+                // Crear un thread aca
+                ignore_next=true;
+                break;
+            }
+            if(size<=index){
+                size+=8;
+                // alocar memoria de manera dinamica 
+                temp=realloc(line,size);
+                if(!temp){
+                    free(line);
+                    line=NULL;
+                    break;
+                }
+                line=temp;
+            }
+            // for ( ; *p; ++p) *p = tolower(*p);
+                // printf("%c",tolower(c));
+            if (!ignore_next){
+                // Para no agregar el salto de linea
+                line[index++]=c;
+            }
+            else{
+                ignore_next=false;
+            }
+            
+        }  // EO While
+    return line;
+    } // EO Function
 
 int compare_function(const void *a,const void *b) {
     WordHash *x = (WordHash *) a;
@@ -151,15 +192,15 @@ void * reduce(void *arguments){
 // void * wordcounter(void *wordboss_void,void *line_void){
 
 void * wordcounter(void *arguments){
-    struct arg_struct *args = (struct arg_struct*)arguments;
-    WordArray *wordboss=(WordArray *)args->arg1;
-    int size=0;
-    char *line_not_void=(char *)args->arg2;
-    // char *line=strcpy();
+    MapArgs *args = (MapArgs*)arguments;
 
-    int lineLength = strlen(line_not_void);
-    char *line = (char*) calloc(lineLength + 1, sizeof(char));
-    strncpy(line_not_void, line, lineLength);
+    WordArray *wordboss=(WordArray *)args->array;
+    // char *line_not_void=(char *)args->line;
+    // // char *line=strcpy();
+    
+    // int lineLength = strlen(line_not_void);
+    // char *line = (char*) calloc(lineLength + 1, sizeof(char));
+    // strncpy(line_not_void, line, lineLength);
 
     char delim[]=" ";
     char *context;
@@ -167,13 +208,13 @@ void * wordcounter(void *arguments){
     // printf("Linea que entra %s \n",line);
     // printf("Linea que entra %p \n",wordboss[0]);
 
-    int inputLength = strlen(line);
-    char *inputCopy = (char*) calloc(inputLength + 1, sizeof(char));
-    strncpy(inputCopy, line, inputLength);
-    line[inputLength]='\0';
+    // int inputLength = strlen(line);
+    // char *inputCopy = (char*) calloc(inputLength + 1, sizeof(char));
+    // strncpy(inputCopy, line, inputLength);
+    // line[inputLength]='\0';
 
-    // char *word = strlow(strtok_r (line, delim, &context));
-    char *word = strtok_r (line, delim, &context);
+    // // char *word = strlow(strtok_r (line, delim, &context));
+    char *word = strtok_r (args->line, delim, &context);
 
     bool shouldInsert=false;
     int position_found=0;
@@ -182,10 +223,12 @@ void * wordcounter(void *arguments){
     WordHash **temp=NULL;
     WordHash **wordarray=malloc(sizeof(WordHash));
     int boss_size=wordboss->size;
+    int size=0;
+
     if(boss_size>0){
         wordarray=realloc(wordarray,sizeof(wordboss->elements));
         wordarray=wordboss->elements;
-        size=wordboss->size;
+        size=boss_size;
     }
     
     
@@ -231,9 +274,9 @@ void * wordcounter(void *arguments){
     insert_sort(wordarray,size);
     // qsort(wordarray,size,sizeof(WordHash),compare_function);
     wordboss->elements=wordarray;
-    wordboss->size=&size;
+    wordboss->size=size;
     // args->accumulated_result=wordarray;
-    args->arg1=wordboss;
+    args->array=wordboss;
     
     pthread_exit(args);
     // free(line);
@@ -290,16 +333,9 @@ int main(int argc, char *argv[]) {
     }
     height=ceil(log2(n_nodes))-1;
 
-
-    int c, index = 0;
-    int size=0;
-
     //  A lo mas una palabra tiene largo 43 char.
     // char *line=NULL;
 
-    char *temp=NULL;
-    char *line=NULL;
-    // int n_words=10;
     // WordHash **wordarray=init_array(n_words);
     
 
@@ -315,7 +351,7 @@ int main(int argc, char *argv[]) {
     WordArray *boss=malloc(sizeof(WordArray));
     boss->size=0;
     boss->elements=NULL;
-    args.arg1=boss;
+    // args.arg1=boss;
 
 	// pthread_attr_t attr;
 	// pthread_attr_init(&attr);
@@ -323,92 +359,99 @@ int main(int argc, char *argv[]) {
     
 
     bool ignore_next;
+    char *line=NULL;
 
-    while(true){
-        if (height==0){
-            printf("Se termino el arblo %i \n");
-        }
-        // SIGINT!!!
-        // Funcion para obtener las lineas
-        
-        ignore_next=false;
-        while ( (c = fgetc (input_file)) != EOF ){
-            if ( c == '\n'){
-                // Agregar ===' ' para una palabra
-                // Se termina una linea por el salto de linea.
-                // Crear un thread aca
-                ignore_next=true;
-                break;
-            }
-            if(size<=index){
-                size+=8;
-                // alocar memoria de manera dinamica 
-                temp=realloc(line,size);
-                if(!temp){
-                    free(line);
-                    line=NULL;
-                    break;
-                }
-                line=temp;
-            }
-            // for ( ; *p; ++p) *p = tolower(*p);
-                // printf("%c",tolower(c));
-            if (!ignore_next){
-                // Para no agregar el salto de linea
-                line[index++]=c;
-            }
-            else{
-                ignore_next=false;
-            }
-            
-        }
-        // 
-        
-        if (ferror (input_file) ){
-            printf ("Read Error\n"), exit (EXIT_FAILURE);
-
-        }
-        args.arg2=line;
-        if((current_line>0) && ((current_line)%2==0)){
-            if( (pthread_join(maps[current_line-2], NULL)) && (pthread_join(maps[current_line-1], NULL)) ){
-                fprintf(stderr, "Error joining thread\n");
-                return 2;
-            };
-
-            pthread_create(&reduces[current_reduce], NULL, (void *)reduce, (void*)&Reduce);
-            current_reduce++;
-            // SE CREA UN THREAD DE REDUCE
-            // Aca se deberia crear el 
-        }
-        // caso donde el numero de MAPS es impar
-        else if((current_line>0) && (current_reduce==n_reduce-1)){
-             if((pthread_join(maps[current_line-1], NULL)) ){
-                fprintf(stderr, "Error joining thread\n");
-                return 2;
-            };
-            printf("Aca se crea un Reduce\n");
-            pthread_create(&reduces[current_reduce], NULL, (void *)reduce, (void*)&args);
-            current_reduce++;
-        }
-        // SE CREA UN THREAD THE MAP
-        if(pthread_create(&maps[current_line], NULL, (void *)wordcounter, (void*)&args)) {
-            fprintf(stderr, "Error creating thread\n");
-            return 1;
-        }
-        printf("CREATED THREAD N_%i\n",current_line);
-        // Update values for loops
-        current_line++;
-        // BORRAR ===================
-        if(current_line==3){
-            break;
-        }
-        // END ======================
-        line=NULL;
-        size=0;
-        index=0;
-        temp=NULL;
-
+    int m;
+        // Creamos un arreglo de arreglos (Matriz) para guardar los map
+    // WordArray **MapMatrix=calloc(sizeof(WordArray),n_lines);
+    MapArgs **MapMatrix=calloc(sizeof(MapArgs),n_lines);
+    // init pointers
+    for(m=0;m<n_lines;m++){
+        MapMatrix[m]=malloc(sizeof(MapArgs));
+        line=get_next_line(input_file);
+        MapMatrix[m]->line=calloc(sizeof(char),strlen(line));
+        strcpy(MapMatrix[m]->line,line);
+        // strcpy(MapMatrix[m]->line,line);
+        MapMatrix[m]->array=malloc(sizeof(WordHash));
     }
+    printf("Matrix initialized\n");
+    n_lines=1;
+    for(m=0;m<n_lines;m++){
+
+        // Para cada linea, creamos un map
+       
+        if(pthread_create(&maps[m], NULL, (void *)wordcounter, (void*)MapMatrix[m])) {
+            fprintf(stderr, "Error creating thread\n");
+        return 1;
+        }
+    }
+
+    for(m=0;m<n_lines;m++){
+        // Para cada map, hacemos un join para esperarlos
+        if(pthread_join(maps[m], NULL) ){
+            fprintf(stderr, "Error joining thread\n");
+            return 2;
+        }
+    }
+    printf("Matrix value created %s \n",MapMatrix[0]->array->elements[7]->word);
+
+
+
+    // while(0){
+    //     if (height==0){
+    //         printf("Se termino el arbol %i \n");
+    //     }
+    //     // SIGINT!!!
+    //     // Funcion para obtener las lineas
+        
+        
+    //     // 
+        
+    //     if (ferror (input_file) ){
+    //         printf ("Read Error\n"), exit (EXIT_FAILURE);
+
+    //     }
+        
+
+
+    //     args.arg2=line;
+    //     if((current_line>0) && ((current_line)%2==0)){
+    //         if( (pthread_join(maps[current_line-2], NULL)) && (pthread_join(maps[current_line-1], NULL)) ){
+    //             fprintf(stderr, "Error joining thread\n");
+    //             return 2;
+    //         };
+
+    //         pthread_create(&reduces[current_reduce], NULL, (void *)reduce, (void*)&Reduce);
+    //         current_reduce++;
+    //         // SE CREA UN THREAD DE REDUCE
+    //         // Aca se deberia crear el 
+    //     }
+    //     // caso donde el numero de MAPS es impar
+    //     else if((current_line>0) && (current_reduce==n_reduce-1)){
+    //          if((pthread_join(maps[current_line-1], NULL)) ){
+    //             fprintf(stderr, "Error joining thread\n");
+    //             return 2;
+    //         };
+    //         printf("Aca se crea un Reduce\n");
+    //         pthread_create(&reduces[current_reduce], NULL, (void *)reduce, (void*)&args);
+    //         current_reduce++;
+    //     }
+    //     // SE CREA UN THREAD THE MAP
+        
+    //     printf("CREATED THREAD N_%i\n",current_line);
+    //     // Update values for loops
+    //     current_line++;
+    //     // BORRAR ===================
+    //     if(current_line==3){
+    //         break;
+    //     }
+    //     // END ======================
+    //     line=NULL;
+    //     size=0;
+    //     index=0;
+    //     temp=NULL;
+
+    // }
     return 0;
 
 }
