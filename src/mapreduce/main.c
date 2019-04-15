@@ -19,12 +19,26 @@ typedef struct MapArgs {
     // WordHash **accumulated_result;
 }MapArgs;
 
+char * copyStr(char s[])
+{
+  size_t len = strlen2(s); //find length of s
+  char * copy; 
+  copy = (char *)malloc(len + 1); //dynamically allocate memory
+                           /* One more char must be allocated for the null char */
+
+  size_t i; 
+  for(i=0;i<len;i++) 
+   {
+     copy[i]=s[i];  //copy characters               
+   }
+   copy[i] = '\0'; // HERE
+   return copy; //return address
+}
 
 typedef struct ReduceArgs{
     WordArray *result;
     WordArray *array2;
     WordArray *array1;
-    int *assigned;
 }ReduceArgs;
 
 // struct reduce_struct Reduce;
@@ -35,6 +49,15 @@ MapArgs **MapMatrix;
 int n_lines=0;
 double height=0;
 
+int strlen2(char *s)
+{
+    int x=0;
+    while (*s++)
+        x++;
+    return(x);
+}
+
+
 int * get_asigned_maps(int n_maps,int n_reduce,int current_reduce){
     int *asigned=malloc(sizeof(int)*2);
     if( ((n_maps%2)!=0) && ( (n_reduce-1)==current_reduce) ){
@@ -43,13 +66,37 @@ int * get_asigned_maps(int n_maps,int n_reduce,int current_reduce){
         asigned[1]=-1;
         }
     else{
-        asigned=malloc(sizeof(int)*2);
+        // asigned=malloc(sizeof(int)*2);
         asigned[0]=current_reduce*2;
         asigned[1]=(current_reduce*2)+1;
         }
     return asigned;
 }
+int * get_asigned_reduce(int n_reduce_prev,int n_reduce,int current_reduce){
+    int *asigned=malloc(sizeof(int)*2);
+    // Si es el nodo raiz;
+    int left_child;
+    int right_child;
+    if (n_reduce==1){
+        asigned[0]=current_reduce-2;
+        asigned[1]=current_reduce-1;
+        return asigned;
+    }
+    else{
+        left_child=2*(current_reduce-n_reduce_prev);
+        right_child=left_child+1;
 
+    }
+    asigned[0]=left_child;
+    int theorethical_child=current_reduce-n_reduce+1;
+    if ((n_reduce_prev%2!=0)&&(theorethical_child==right_child)){
+        asigned[1]=-1;
+    }
+    else{
+        asigned[1]=right_child;
+    }
+    return asigned;
+}
 void print_array(WordHash **array,int size){
     for(int i=0;i<size;i++){
         printf("WORD: %s | FREQ: %d \n",array[i]->word,array[i]->frequency);
@@ -73,23 +120,22 @@ void insert_sort(WordHash **arr,int n){
     } 
 }
 char * get_next_line(FILE * input_file){
-        bool ignore_next;
         int c, index = 0;
         int size=0;
         char *temp=NULL;
+        char *tempfinal=NULL;
         char *line=NULL;
         while ( (c = fgetc (input_file)) != EOF ){
             if ( c == '\n'){
                 // Agregar ===' ' para una palabra
                 // Se termina una linea por el salto de linea.
                 // Crear un thread aca
-                ignore_next=true;
                 break;
             }
             if(size<=index){
-                size+=8;
+                size+=1;
                 // alocar memoria de manera dinamica 
-                temp=realloc(line,size);
+                temp=realloc(line,size+1);
                 if(!temp){
                     free(line);
                     line=NULL;
@@ -99,46 +145,22 @@ char * get_next_line(FILE * input_file){
             }
             // for ( ; *p; ++p) *p = tolower(*p);
                 // printf("%c",tolower(c));
-            if (!ignore_next){
-                // Para no agregar el salto de linea
-                line[index++]=c;
-            }
-            else{
-                ignore_next=false;
-            }
-            
+            // if (!ignore_next){
+            //     // Para no agregar el salto de linea
+            line[index++]=c;
+            // }
+            // else{
+                
+            //     ignore_next=false;
+            // }
         }  // EO While
-    return line;
+
+    tempfinal=malloc(size+1);
+    tempfinal=line;
+    return tempfinal;
     } // EO Function
 
-int compare_function(const void *a,const void *b) {
-    WordHash *x = (WordHash *) a;
-    WordHash *y = (WordHash *) b;
-    if ( x->frequency < y->frequency )
-    {
-        return -1;
-    }
-    else if ( y->frequency < x->frequency )
-    {
-        return 1;
-    }
-    else
-    {
-        if ( x->frequency < y-> frequency )
-        {
-            return 1;
-        }
-        else if ( y->frequency < x->frequency )
-        {
-            return -1; 
-        }
-        else
-        {
-            return 0;
-        }
-    }
-   
-}
+
 // Convierte dirty_string a lowercase
 char * strlow(char *dirty_string){
     for(int i=0;dirty_string[i];i++){
@@ -154,19 +176,22 @@ void * reduce(void *arguments){
     printf("entra\n");
     ReduceArgs *args =(ReduceArgs*) arguments;
 
-    WordArray *result=args->result;
-    WordArray *boss1=args->array1;
-    WordArray *boss2=args->array2;
+    // WordArray *result=args->result;
+    WordArray *boss1=(WordArray*)args->array1;
+    WordArray *boss2=(WordArray*)args->array2;
     
-    int size1=boss1->size;
-    int size2=boss2->size;
+    int size1=(int)boss1->size;
+    int size2=(int)boss2->size;
     bool shouldInsert=false;
     int position_found=0;
     WordHash **static_array=boss1->elements;
     WordHash **iterated_array=boss2->elements;
     WordHash **temp=NULL;  
     int current_word=0;
-    while(size2>0){
+    while(true){
+        if(boss2->size==0){
+            break;
+        }
         char *word=iterated_array[current_word]->word;
         shouldInsert=true;
         // Iteramos sobre el array statico para ver si existe la palabra
@@ -180,7 +205,7 @@ void * reduce(void *arguments){
         }
         if(shouldInsert){
             // inseratmos la palabra en al array
-            if (strlen(word)>0){
+            if (strlen2(word)>0){
                 temp=realloc(static_array,sizeof(WordHash)*(size1+1));
                 if(!temp){
                     // NULL POINTER!, NOT ENOUGH MEMORY?
@@ -201,8 +226,12 @@ void * reduce(void *arguments){
             static_array[position_found]->frequency+=1;
         }
         word=iterated_array[current_word++]->word;
-        size2--;
+        boss2->size--;
+        if(size2==0){
+            printf("brea\n");
+        }
     }
+   
     insert_sort(static_array,size1);
     args->result->elements=malloc(sizeof(static_array));
     args->result->elements=static_array;
@@ -218,10 +247,12 @@ void * wordcounter(void *arguments){
     MapArgs *args = (MapArgs*)arguments;
 
     WordArray *wordboss=(WordArray *)args->array;
+    wordboss=malloc(sizeof(WordArray));
+
     // char *line_not_void=(char *)args->line;
     // // char *line=strcpy();
     
-    // int lineLength = strlen(line_not_void);
+    // int lineLength = strlen2(line_not_void);
     // char *line = (char*) calloc(lineLength + 1, sizeof(char));
     // strncpy(line_not_void, line, lineLength);
 
@@ -231,7 +262,7 @@ void * wordcounter(void *arguments){
     // printf("Linea que entra %s \n",line);
     // printf("Linea que entra %p \n",wordboss[0]);
 
-    // int inputLength = strlen(line);
+    // int inputLength = strlen2(line);
     // char *inputCopy = (char*) calloc(inputLength + 1, sizeof(char));
     // strncpy(inputCopy, line, inputLength);
     // line[inputLength]='\0';
@@ -244,15 +275,14 @@ void * wordcounter(void *arguments){
 
 
     WordHash **temp=NULL;
-    WordHash **wordarray=malloc(sizeof(WordHash));
-    int boss_size=wordboss->size;
+    WordHash **wordarray=NULL;
     int size=0;
 
-    if(boss_size>0){
-        wordarray=realloc(wordarray,sizeof(wordboss->elements));
-        wordarray=wordboss->elements;
-        size=boss_size;
-    }
+    // if(boss_size>0){
+    //     wordarray=realloc(wordarray,sizeof(wordboss->elements));
+    //     wordarray=wordboss->elements;
+    //     size=boss_size;
+    // }
     
     
 
@@ -271,7 +301,7 @@ void * wordcounter(void *arguments){
         }
         if(shouldInsert){
             // inseratmos la palabra en al array
-            if (strlen(word)>0){
+            if (strlen2(word)>0){
                 temp=realloc(wordarray,sizeof(WordHash)*(size+1));
                 if(!temp){
                     // NULL POINTER!, NOT ENOUGH MEMORY?
@@ -296,6 +326,7 @@ void * wordcounter(void *arguments){
 
     insert_sort(wordarray,size);
     // qsort(wordarray,size,sizeof(WordHash),compare_function);
+    wordboss->elements=malloc(sizeof(WordHash*)*size);
     wordboss->elements=wordarray;
     wordboss->size=size;
     // args->accumulated_result=wordarray;
@@ -349,7 +380,7 @@ int main(int argc, char *argv[]) {
             }
     if(chars_on_current_line>0) n_lines++;
     
-    printf("Curent %i\n",n_lines);
+    // printf("Curent %i\n",n_lines);
     // reseteamos el puntero al inicio del archivo..
     rewind(input_file);
 
@@ -376,24 +407,22 @@ int main(int argc, char *argv[]) {
 //  -4 es por el int de frequency.
     // int size_chars=sizeof(WordHash)-4;
 
+    // n_reduce=n_nodes-n_lines;
 
-    pthread_t maps[n_lines];
-    
-    pthread_t reduces[n_reduce];
 
-    WordArray *boss=malloc(sizeof(WordArray));
-    boss->size=0;
-    boss->elements=NULL;
+    // boss->size=0;
+    // boss->elements=NULL;
     // args.arg1=boss;
 
 	// pthread_attr_t attr;
 	// pthread_attr_init(&attr);
     // wordcounter(boss);
-    
+    pthread_t maps[n_lines];
+    pthread_t reduces[n_nodes-n_reduce];
 
+    
     bool ignore_next;
     char *line=NULL;
-
     int m;
         // Creamos un arreglo de arreglos (Matriz) para guardar los map
     // WordArray **MapMatrix=calloc(sizeof(WordArray),n_lines);
@@ -402,10 +431,13 @@ int main(int argc, char *argv[]) {
     for(m=0;m<n_lines;m++){
         MapMatrix[m]=malloc(sizeof(MapArgs));
         line=get_next_line(input_file);
-        MapMatrix[m]->line=calloc(sizeof(char),strlen(line));
-        strcpy(MapMatrix[m]->line,line);
+        printf("value is %i M:%i\n",strlen2(line),m);
+        MapMatrix[m]->line=copyStr(line);
+        // MapMatrix[m]->line=malloc(sizeof(char)*(strlen2(line)+1));
         // strcpy(MapMatrix[m]->line,line);
-        MapMatrix[m]->array=malloc(sizeof(WordHash));
+        // strcpy(MapMatrix[m]->line,line);
+        MapMatrix[m]->array=NULL;
+        line=NULL;
     }
     printf("Matrix initialized\n");
     // n_lines=2;
@@ -435,8 +467,9 @@ int main(int argc, char *argv[]) {
 
     int *assigned=NULL;
 
-    ReduceArgs **ReduceMatrix=calloc(sizeof(ReduceArgs),n_reduce);
+    ReduceArgs **ReduceMatrix=calloc(sizeof(ReduceArgs),n_nodes-n_reduce);
     int r;
+
     for(r=0;r<n_reduce;r++){
         ReduceMatrix[r]=malloc(sizeof(ReduceArgs));
         assigned=get_asigned_maps(n_lines,n_reduce,r);
@@ -445,23 +478,90 @@ int main(int argc, char *argv[]) {
         if(assigned[1]!=-1){
             ReduceMatrix[r]->array2=malloc(sizeof(MapMatrix[assigned[1]]->array));
             ReduceMatrix[r]->array2=MapMatrix[assigned[1]]->array;
+            ReduceMatrix[r]->result=malloc(sizeof(WordArray));
+            pthread_create(&reduces[r],NULL,(void *)reduce,(void*)ReduceMatrix[r]);
         }
         else{
-            ReduceMatrix[r]->array2=malloc(sizeof(WordArray*));
+            ReduceMatrix[r]->array2=NULL;
+            // No es necesario hacer un thread
+            ReduceMatrix[r]->result=malloc(sizeof(MapMatrix[assigned[0]]->array));
+            ReduceMatrix[r]->result=MapMatrix[assigned[0]]->array;
         }
         // strcpy(ReduceMatrix[m]->line,line);
-        ReduceMatrix[r]->result=malloc(sizeof(WordArray*));
-        pthread_create(&reduces[r],NULL,(void *)reduce,(void*)ReduceMatrix[r]);
+        
         // current_reduce++;
     }
-
+        // Join threads
     for(m=0;m<n_reduce;m++){
         // Para cada map, hacemos un join para esperarlos
-        if(pthread_join(reduces[m], NULL) ){
-            fprintf(stderr, "Error joining thread\n");
-            return 2;
+        assigned=get_asigned_maps(n_lines,n_reduce,m);
+        if(assigned[1]!=-1){
+            if(pthread_join(reduces[m], NULL) ){
+                fprintf(stderr, "Error joining thread\n");
+                return 2;
+            }
         }
     }
+    int base=n_reduce;
+
+    n_lines=n_reduce;
+    if (n_reduce%2==0){
+        n_reduce=(int)(n_reduce/2);
+    }
+    else{
+        n_reduce=(int)((n_reduce-1)/2)+1;
+    }
+    // base+=n_reduce;
+    height--;
+        
+    while(height>0){
+        // maps=realloc(maps,sizeof(pthread_t)*n_lines);
+        // reduces=realloc(reduces,sizeof(pthread_t)*n_reduce);
+        // Create threads
+        for(r=base;r<n_reduce+base;r++){
+            ReduceMatrix[r]=malloc(sizeof(ReduceArgs));
+            assigned=get_asigned_reduce(n_lines,n_reduce,r);
+            ReduceMatrix[r]->array1=malloc(sizeof(ReduceMatrix[assigned[0]]->result));
+            ReduceMatrix[r]->array1=ReduceMatrix[assigned[0]]->result;
+            if(assigned[1]!=-1){
+                ReduceMatrix[r]->array2=malloc(sizeof(ReduceMatrix[assigned[1]]->result));
+                ReduceMatrix[r]->array2=ReduceMatrix[assigned[1]]->result;
+                ReduceMatrix[r]->result=malloc(sizeof(WordArray));
+                pthread_create(&reduces[r],NULL,(void *)reduce,(void*)ReduceMatrix[r]);
+            }
+            else{
+                ReduceMatrix[r]->array2=NULL;
+                // No es necesario hacer un thread
+                ReduceMatrix[r]->result=malloc(sizeof(ReduceMatrix[assigned[0]]->result));
+                ReduceMatrix[r]->result=ReduceMatrix[assigned[0]]->result;
+            }
+            // strcpy(ReduceMatrix[m]->line,line);
+            
+            // current_reduce++;
+        }
+        // Join threads
+        for(m=base;m<n_reduce+base;m++){
+            // Para cada map, hacemos un join para esperarlos
+            assigned=get_asigned_reduce(n_lines,n_reduce,m);
+            if(assigned[1]!=-1){
+                if(pthread_join(reduces[m], NULL) ){
+                    fprintf(stderr, "Error joining thread\n");
+                    return 2;
+                }
+            }
+        }
+        n_lines=n_reduce;
+        base+=n_reduce;
+
+        if (n_reduce%2==0){
+            n_reduce=(int)(n_reduce/2);
+        }
+        else{
+            n_reduce=(int)((n_reduce-1)/2)+1;
+        }
+        height--;
+    }
+    // printf(ReduceMatrix[n_nodes-n_reduce]);
     printf("DONE\n");
     // printf("Matrix value created %s \n",MapMatrix[0]->array->elements[7]->word);
 
@@ -522,6 +622,6 @@ int main(int argc, char *argv[]) {
     //     temp=NULL;
 
     // }
-    return 0;
+   pthread_exit(NULL); 
 
 }
