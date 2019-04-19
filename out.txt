@@ -1,6 +1,3 @@
-NUMBER OF LINES: 195
-Number of nodes is 394 
-DONE
 1,fatally
 1,hysteric
 1,snootily
@@ -305,7 +302,7 @@ DONE
 1,bucolic
 1,charmingly
 1,redoubtable
-1,atrociousÒ
+1,atrocious—
 1,imitative
 1,articulately
 1,egotistic
@@ -324,7 +321,7 @@ DONE
 1,luxuriantly
 1,absolutely
 1,licentiously
-1,impatient'
+1,impatient5
 1,festively
 1,physic
 1,grave
@@ -365,7 +362,7 @@ DONE
 1,humane
 1,overlaid
 1,epidemic
-1,wetted
+1,wetted$
 1,anagogic
 1,spuriously
 1,elusively
@@ -452,7 +449,7 @@ DONE
 1,inanimate
 1,comprehensively
 1,portentously
-1,so¯
+1,so
 1,frail
 1,celestially
 1,husky
@@ -494,7 +491,7 @@ DONE
 1,artificial
 1,grimy
 1,expressly
-1,tarantulaË
+1,tarantulaˆ
 1,nimbly
 1,despicably
 1,superbly
@@ -600,7 +597,7 @@ DONE
 1,selfconscious
 1,daintily
 1,repulsive
-1,geckoa
+1,geckoA
 1,slackly
 1,garish
 1,intricately
@@ -620,7 +617,7 @@ DONE
 1,listlessly
 1,disgraceful
 1,ambiguous
-1,over¥
+1,over¬
 1,incredible
 1,telepathically
 1,scantly
@@ -690,7 +687,7 @@ DONE
 1,floppily
 1,coward
 1,mindfully
-1,destructiveQ
+1,destructive1
 1,significantly
 1,ceaseless
 1,seriously
@@ -832,7 +829,7 @@ DONE
 1,soulfully
 1,skeptic
 1,energetically
-1,whileÒ
+1,while—
 1,proud
 1,desirably
 1,abnormally
@@ -847,7 +844,7 @@ DONE
 1,notable
 1,cannily
 1,steadily
-1,rakishlym
+1,rakishly{
 1,esoterically
 1,chuckled
 1,enchanting
@@ -876,7 +873,7 @@ DONE
 1,flimsily
 1,feebly
 1,cravenly
-1,atd
+1,atr
 1,telepathic
 1,inflexibly
 1,awfully
@@ -1005,7 +1002,7 @@ DONE
 1,narrow
 1,sociable
 1,indifferent
-1,amongst°
+1,amongstÅ
 1,unthinking
 1,icy
 1,imaginative
@@ -2232,113 +2229,3 @@ DONE
 248,and
 266,far
 267,much
-NUMBER OF LINES: 266
-Number of nodes is 537 
---Resultado  del map 1 
-1,[fatally;hysteric;snootily;miraculous;strong;inadvertent;maladroit;lusty;after;lynx;irresistibly;debonairly;amoral;unwitting;upset;fluent;statically;cm;affectionately;glibly;nonsensically;jolly;anxiously;ravenous;extensive;noticeable;toughly;mumbled;led;editorial;useful;criminal;fatal;inexhaustible;slack;outsold;talkatively;breathless;slovenly;contemptible;goodhearted;distant;eminently;inversely;submissively;publicly;secure;slight;shook;busted;babbled;jeering;vivacious;spaciously;begrudgingly;ridiculous;quietly;stoic;rational;ambitious;inescapable;noisy;dependently;glum;ebullient;turgid;congenial;consistently;cute;serene;evidently;abundantly;stern;allegedly;forthright;floated;inconspicuous;sexual;tepidly;inappreciable;breezily;powerlessly;gross;domestic;covetously;manifest;glared;euphemistic;dipped;excited;chaste;vain;ludicrously;glumly;flattering;amenable;ground;unscrupulously;confident;stiffly;anonymous;cosmetic;sexily;trim;frivolously;endless;blank;boundlessly;altruistic;exuberantly;healthily;raucously;tactfully;familiarly;spat;complacently;tightly;ethereally;expeditiously;randomly;impious;playfully;duteous;friskily;continually;staid;covetous;flashy;eminent;neglectfully;bestial;adoringly;thoughtfully;crookedly;decisive;alert;saucily;dismally;meticulously;brought;clinically;mannish;slovene;shoddy;quaint;evilly;square;domestically;wanly;sincerely;ungraceful;audibly;reproachfully;pessimistically;active;stolidly;considerably;gulped;debonair;consolingly;winsomely;exactly;notorious;improperly;rank;unproductive;bound;snarling;comparable;indecent;gauche;spacious;beat;ragingly;eccentrically;bought;indecisively;highhandedly;effortlessly;sullen;ingenuously;privately;spryly;gently;hectically;crude;fit;wholesomely;pessimistic;animatedly;assenting;rigidly;frequent;innocuous;flirtatiously;pounded;especial;game;bucolically;coaxing;cliquishly;religiously;unreceptive;enticingly;dramatically;compactly;dutifully;meretricious;sleek;gallant;neutral;inverse;crept;happily;lame;meretriciously;outrageous;taped;constitutional;abundant;factiously;acutely;conscientiously;mighty;ironically;correct;trying;cautiously;expediently;essential;affable;disconsolately;conductively;adequate;unblushing;strict;safely;anticipatively;bewitchingly;guinea;cooperatively;erroneous;gnu;ready;bet;thankful;athletic;dependent;collective;erratically;discarded;fatuously;immensely;enchantingly;slavish;spitefully;irksomely;tarantula;falsely;incapably;decided;sternly;scooped;dealt;resolutely;haltered;licentious;melodious;jubilantly;sardonically;gurgled;ambiguously;lazily;shortsightedly;deeply;reciprocating;indisputable;tragic;pertly;canny;contrite;uselessly;hardheaded;saliently;permissive;howled;indelicate;examined;outran;tonal;smelled;dishonestly;rudely;aurally;resigned;agonizingly;watchful;solicitous;insufferably;creepily;sedulously;bucolic;charmingly;redoubtable;atrociousÒ;imitative;articulately;egotistic;invaluably;tough;amenably;vaguely;haughtily;pushed;earnestly;lethargically;contumaciously;factual;momentously;dutiful;luxuriantly;absolutely;licentiously;impatient';festively;physic;grave;satisfactorily;starkly;dynamically;melodiously;magnificently;dolorous;rakishly;militantly;accurately;concentrically;factually;expeditious;jaded;put;moronic;broke;mysteriously;circuitously;toneless;flabbily;breathlessly;cynic;insane;stringent;maturely;tore;wobbled;censorious;repaid;passably;danced;faltering;subversively;spoiled;humane;overlaid;epidemic;wetted;anagogic;spuriously;elusively;smart;possessive;shot;tearfully;vehemently;mercifully;distinct;thick;waved;forsook;laboriously;fresh;worm;sniffed;occasional;elaborately;flabby;implacable;abnormal;normal;forcefully;conscientious;ineffective;involuntarily;overdid;huge;poutingly;provident;blatant;wistfully;spurious;sporadic;conservative;mellifluous;incompetently;delicately;gorgeously;diverse;needless;bland;fishily;happy;inaudibly;engaging;sighed;ecstatically;ruthless;boyish;sourly;neutrally;gaudy;narrowly;contritely;kindhearted;methodic;fraternally;cost;carnal;tyrannical;popular;livid;qualitative;stormy;fractious;slyly;comprehensive;approving;marvelously;tight;chromatic;masterfully;arguably;garishly;hopeful;wastefully;correctly;harsh;factious;basic;immaturely;inanimate;comprehensively;portentously;so¯;frail;celestially;husky;mature;surely;revealed;rankly;disgracefully;perceptible;suddenly;favorably;dire;lubber;energetic;vociferously;solemn;compatibly;crazy;teasingly;unthinkingly;abhorrent;unsafe;stiff;properly;uniquely;regally;witlessly;indifferently;selfishly;artfully;untruthfully;shortsighted;selfless;menial;honorably;ashamedly;shaky;remotely;artificial;grimy;expressly;tarantulaË;nimbly;despicably;superbly;viscerally;irritably;beneficently;laughed;dogged;immorally;juicy;testy;tediously;moronically;interminably;rampantly;bravely;soggy;convenient;majestically;ineptly;momentous;bewitching;conclusive;compatible;numb;resentful;slavishly;punctiliously;confusedly;impalpably;querulously;amazing;practical;impeccably;airy;blanched;blessedly;surreptitiously;perversely;memorable;resolute;implacably;cheerfully;methodically;dearly;virtuous;plain;asininely;freshly;boisterous;abruptly;certainly;freely;sensually;arguable;effective;easy;aerial;lackadaisical;scandalous;plentifully;prim;rigorously;impatient;respectful;fortuitous;heartless;unimaginative;smugly;adept;jerkily;smooth;ably;deceiving;categorically;eloquent;supply;trimly;carelessly;unspeakably;plainly;cumulatively;salacious;grievous;snuffed;inconsiderately;rapt;angrily;impatiently;accommodating;unselfishly;quiet;aesthetic;credible;evasively;false;patiently;mundane;objective;reprehensively;unstinting;uninspiring;selfconscious;daintily;repulsive;geckoa;slackly;garish;intricately;vulgar;lewdly;imperative;tedious;frustratingly;messily;alertly;untiringly;mundanely;elaborate;jovially;comfortable;craven;listlessly;disgraceful;ambiguous;over¥;incredible;telepathically;scantly;picked;luridly;humble;embarrassingly;apologetic;soundly;smirked;fraternal;maliciously;weak;fuzzily;suggestive;complete;pouting;queerly;immodestly;fanatic;tenacious;furiously;beseechingly;outgrew;abiding;sobbing;crass;oafish;jaunty;naturally;credibly;helpfully;wishful;adroit;judicious;unexpected;hugely;conductive;understandable;underlay;firm;sorely;immediately;sharply;tolerant;childishly;tendentious;shrank;closed;concretely;vengeful;stylistic;extraordinary;thought;palpable;hilariously;extensively;empiric;nonchalant;jokingly;gaily;hardheadedly;fearless;lightheartedly;sensationally;fetching;floppily;coward;mindfully;destructiveQ;significantly;ceaseless;seriously;prissily;fixed;cunningly;hesitantly;ethic;deep;supportively;antagonistic;pulled;urgent;menially;contemptibly;hazily;effectively;curious;subconscious;decisively;wiped;tacit;changed;classic;rebound;inflexible;loving;useless;thickly;nobly;prodigious;petted;sordidly;compact;fragrant;adventurous;unblushingly;stunningly;insolently;forecast;exaggerated;fruitfully;nosily;bid;hummed;mysterious;supportive;listless;deceivingly;took;destructively;droll;flashily;vehement;prudently;tepid;sedulous;alarming;regretful;nasty;ineffectively;jadedly;generously;raptly;sent;dived;puerile;frowned;derisively;crucial;gratefully;arousing;curt;mildly;fittingly;skillfully;independently;auspiciously;set;sour;dismal;devilishly;victorious;suspicious;frugally;exorbitantly;quail;precisely;academic;tackily;marked;flustered;monumental;agreeably;ardent;foolish;petulant;blissful;infuriatingly;gloated;elegantly;diabolically;jovial;auspicious;began;pleasantly;giggly;constructive;haggard;sad;silent;accommodatingly;thrust;tyrannically;guarded;egotistically;sanctimonious;opaque;evasive;austerely;contagious;fumblingly;remarkably;free;fetchingly;serious;robustly;judiciously;extraordinarily;unexplainably;vacuous;showily;partook;crucially;excursive;indefatigably;truly;vigorous;soulfully;skeptic;energetically;whileÒ;proud;desirably;abnormally;copious;groggy;absolute;gallantly;groaned;redoubtably;avaricious;exuberant;notable;cannily;steadily;rakishlym;esoterically;chuckled;enchanting;imprecisely;hypocritical;frowningly;shamefully;incredibly;ecstatic;fashionable;capable;punctilious;bled;spiteful;bearishly;wept;overshot;placid;lackadaisically;ceremonially;nefarious;astonishing;infectious;healthy;classically;flimsily;feebly;cravenly;atd;telepathic;inflexibly;awfully;creative;coincidentally;dainty;poignantly;wonderful;befell;perilous;reined;private;joyfully;candidly;usefully;sparing;overrode;definite;mockingly;religious;laudable;awful;unerringly;tidy;completely;advantageous;painfully;juicily;nauseatingly;unintelligible;adamant;packed;visceral;kissed;nimble;cowardly;grabbed;exotic;luscious;aimlessly;carnally;gregarious;pitifully;obsessively;coaxingly;customary;coughed;experimentally;capital;minute;direly;tart;lavish;whispered;monkey;dubiously;resplendently;indiscreetly;frightening;poetic;poignant;markedly;conclusively;thirsty;cardinally;meek;stridently;gamely;stolid;fanciful;popularly;blatantly;impassive;rigid;nosy;intense;festive;asinine;blushed;smooched;prosperously;blindly;majestic;fancifully;affirmative;bleak;variously;foolhardily;broadly;sentimental;charming;tamely;keen;abominable;sane;tentative;hazardous;piquant;weird;severely;clever;peaceful;relentless;monogamous;tragically;splashed;wayward;soothing;grumbled;agitatedly;swanky;timorously;endearingly;abjectly;effortless;mistaken;curtly;unbearably;affirmatively;contrarily;raunchily;educational;squarely;invidious;sensitive;narrow;sociable;indifferent;amongst°;unthinking;icy;imaginative;jauntily;coldly;celestial;boisterously;jerky;immoral;irritable;desolate;taunting;dull;anathematically;flirtatious;neurotic;curtsied;wedded;exaggeratedly;tacitly;childish;greedy;uneasily;beneficent;repusively;portentous;coyly;vivaciously;merry;tremendous;realistically;sympathetic;strived;sheepish;scandalously;delightful;ebulliently;archaic;lecherously;swelled;stringently;wry;pungent;flamboyantly;moody;inset;feeling;cuffed;peculiar;confused;extrinsic;evil;atrociously;removed;sudden;reverently;illicitly;affluent;aural;laggard;sorrowful;articulate;zealous;spontaneous;horrendously;unanimous;coquettish;nervelessly;broadcast;wore;impeccable;irresistible;unbearable;punitive;pinched;rugged;athletically;honest;lied;ireful;cozily;heinously;adventurously;suavely;avariciously;grimaced;ate;fatefully;negatively;sleazily;flat;perceptibly;independent;rebuilt;brusquely;commendable;soulful;blithely;musically;slowly;compassionate;attractive;accurate;poked;stubbornly;lantern;neatly;compulsive;moral;fleet;winningly;unsociable;amicably;proper;peskily;imminent;congratulated;glib;sorrowfully;abashed;dominant;radically;clinic;divisive;intuitively;raunchy;mislaid;fearlessly;mowed;seagull;flaunting;wantonly;metaphoric;analogically;ignorantly;preset;archly;precociously;fumed;mischievously;fastidiously;fruitlessly;faulty;arrogant;tentatively;talkative;pert;ripe;cogent;bawdily;icily;recklessly;smoothly;indiscreet;oyster;groggily;eternally;frequently;sobbed;strove;rewrote;hippopotamus;outbid;simple;mannishly;archaically;brave;funny;abominably;placidly;playful;silently;staidly;hypnotically;loaded;redhanded;wickedly;ponderous;loosely;ravingly;execrably;scurrilously;flung;quit;mad;coincidental;overheard;expansively;endlessly;fell;avoidably;immense;physically;falcon;overlay;reindeer;inoffensively;limpet;embarrassing;ducked]
---Resultado  del map 2 
-2,[fiendishly;effusive;indecisive;obscure;whimpered;rethought;garrulously;softly;abysmal;hazy;unequivocally;impertinently;dispassionate;youthfully;rhythmic;giggled;struck;awkward;overcast;conditionally;pungently;erratic;massive;wailed;diplomatic;greedily;racily;strongly;oafishly;drunkenly;selfconsciously;fantastic;gent;innocently;precarious;tactful;woeful;slickly;informal;obdurately;studied;frenetic;austere;arbitrary;cattily;dreamed;informally;mastodon;idiotic;naively;flippantly;illicit;met;blissfully;illustratively;anteater;artistically;dubious;hesitant;fallible;input;humorously;puerilely;grotesquely;rode;understandably;wholehearted;zebra;hare;endearing;whimsically;overran;romantic;sincere;loudly;positive;enormously;incapable;dizzily;aptly;burst;absently;radiantly;explicit;impartial;willful;sociably;spoonfed;quickly;proofread;necessarily;cogently;static;insincere;tauntingly;lenient;successful;unsuccessfully;indirectly;imaginatively;squinted;unihibitedly;intuitive;humorous;meager;tendentiously;emphatically;erect;persistent;mistook;porcupine;imminently;snug;facetiously;neurotically;clumsily;devoted;aristocratically;noiseless;tartly;feverish;drank;moist;busily;cagy;unerring;buoyantly;lethargic;reliably;foresaw;touched;subtle;dangerously;flexed;unsafely;horrendous;pompously;pathetically;unceremoniously;knelt;oriole;sprang;fidgeted;balked;virtuously;flew;nicely;grudging;loud;salaciously;manfully;misunderstood;oppressive;somberly;repeatedly;grew;underwrote;blind;scornfully;precocious;hooted;elusive;advantageously;fraudulently;inventoried;boyishly;demonstrably;goat;overslept;furious;haphazard;learned;overthrew;rampant;polite;masochistically;stuck;fluid;misheard;luxuriant;sat;staunchly;pious;insect;miser;froze;vivid;hotly;slew;faithful;fallacious;apt;shameful;despicable;matteroffact;nakedly;inarticulate;reserved;flawlessly;trustful;perfect;sexually;sought;cantankerous;pouted;metaphorically;walked;insufferable;cold;considerable;rhythmically;gawky;pernicious;sniffled;growled;unscrupulous;returned;gladly;concentric;imprecise;paid;characteristically;fought;played;stark;derisive;bore;concrete;thoughtful;reran;unavoidable;barbarously;unsociably;whooped;woodchuck;flawless;obsessive;beauteous;winced;compositely;knitted;recast;activated;thirstily;blandly;bowed;cracked;diplomatically;limp;patted;copiously;slightly;rolled;harshly;staunch;deservedly;fox;hectic;nerveless;turgidly;aimless;subconsciously;hedgehog;shrewdly;sheepishly;stung;raffish;dazedly;flinched;cockily;perfectly;loyal;specially;airily;menacingly;brokenly;violent;feverishly;obediently;catty;anticipative;relaid;boundless;strode;spelled;mandrill;slid;frisky;stole;hid;chortled;sadistic;cautious;gave;continual;fluidly;forewent;grievously;panther;placed;censoriously;hardy;mounted;kept;snickered;mallard;hit;constructively;glanced;uninspiringly;poured;immeasurably;desperately;vigilantly;tense;naughty;feeble;doubtfully;wearisome;scurrilous;sewed;peered;grudgingly;noble;circuitous;gravely;lopsidedly;ruggedly;abhorrently;weirdly;slow;abrasively;vibrantly;sexy;foretold;wise;tastefully;conjointly;jocosely;swankily;numbly;connected;stood;hugged;peevish;disrespectful;vigilant;singleminded;had;beamed;unaccountably;foully;turned;sober;sulkily;commendably;swung;petulantly;redhandedly;unkind;serenely;heedlessly;forwardly;hiccupped;aloof;impartially;ironic;dark;brilliant;minimal;unhopeful;strenuously;guiltily;witless;awkwardly;indistinctly;split;fitting;hatchet;desolately;saddled;audible;creepy;guffawed;invoked;intrepidly;blameless;prosperous;clapped;morbid;honestly;inept;saw;rash;fondly;directed;banally;slung;conspicuously;paternal;piously;concise;cagily;vacuously;improper;coasted;built;sang;resentfully;blunt;became;keenly;fussily;persistently;wicked;lamely;purely;bred;wrung;bashfully;anathematic;primly;added;gnashed;dryly;foolhardy;spoke;manifestly;repeated;tersely;ceremonial;special;rebuking;frustrating;interbred;delightfully;massively;tacky;callously;broken;splendidly;angelic;maternal;was;cringed;concomitantly;ambitiously;ceaselessly;confessed;harmfully;exclusive;steadfastly;desirable;pragmatic;emotional;uneasy;witty;hazardously;appalling;sentimentally;obliquely;voally;sensitively;impressively;told;overpaid;tirelessly;halfhearted;jeeringly;strenuous;baleful;lugubriously;legitimate;badly;combed;strewed]
---Resultado  del map 3 
-3,[disagreed;forgot;laughing;incessant;plankton;forbade;overtook;annoying;slapped;made;knew;atrocious;snapped;capybara;shoddily;sneered;misread;followed;valiantly;turbulently;read;dragonfly;rose;interwove;sped;objectively;drew;overcame;disbanded;filled;fawningly;trod;wallaby;absentmindedly;respectfully;browbeat;awesomely;rid;nodded;rewound;ignorant;fired;drove;radical;blew;swept;undid;macaw;flapped;dismounted;panda;dalmatian;impala;stopped;lemming;octopus;overate;tangibly;cowered;salmon;dug;leered;sloth;wolverine;showed;sheep;goldfish;pesky;greyhound;taught;cavalier;eel;walrus;strung;cried;whistled;flipped;submissive;overdrew;remade;ferocious;flirted;hyena;muttered;wrote;swam;caught;iguanodon;did;scratched;shined;twitched;exited;sank;dauntless;winsome;belligerent;woefully;erotically;incongruously;threw;ordered;piranha;bird;folded;scowled;cutting;grinned;left;thinly;cheered;acceptably;powerless;diabolic;rapidly;frog;found;cocky;flailed;jay;conic;hurt;smiled;earthworm;smoked;supreme;opened;tortoise;giraffe;urchin;excursively;burped;tritely;hung;stank;rabbit;explicitly;smilingly;manatee;monumentally;outdid;gerbil;resold;wolf;ruthlessly;forbidding;readily;drooled;spilled;shrugged;leopard;querulous;unexplainable;arose;grouped;leapt;trite;dully;weakly;emoted;gagged;intricate;gnu;terrible;unsuccessful;came;gibbered;boomed;misled;courteously;moth;stingy;stoutly;misspelled;awesome;inoffensive;instantaneously;pushed;pleasant;salamander;cardinal;tapir;basically;satanic;evenly;duteously;moaned;angry;upheld;juggled;shuffled;cast;spent;shivered;rubbed;consoled;gecko;darkly;pointed;shed;cuddled;gazed;authentically;editorially;unwillingly;cobra;unjustifiably;inconspicuously;ran]
---Resultado  del map 4 
-4,[capriciously;oversaw;shuddered;squid;adjusted;tamarin;fulsome;unsaddled;awakened;slit;stretched;poetically;bounced;spluttered;honey;dropped;sheared;goose;mammoth;nutria;abject;overhung;lion;pangolin;haphazardly;unbridled;contemplated;won;bent;trenchantly;wound;penguin;fed;mongoose;bawled;scallop;oversold;goldfinch;dog;amidst;meadowlark;laxly;lighted;fled;let;redid;beheld;antelope;unicorn;withdrew;spread;snarlingly;groomed;cut;preparatory;rattlesnake;amongst;excluding;glowered;shut;belligerently;llama;regarding;ocelot;lent;kiwi;fitted;harmful;python;grasshopper;crab;blinked;wetted;radiant;unwound;vulnerably;doused;climbed;buffalo;checked;komodo;beaver;kookaburra;felt;kneeled;pled;unlocked;firmly;copied;ferret;yawned;cackled;heard;whale;lobster]
---Resultado  del map 5 
-5,[eagle;went;lost;turtle;porpoise;jellyfish;snorted;cockatoo;emu;hound;below;cat;saluted;weasel;aardvark;customarily;uncritical;rooster;terrier;lizard;house;logic;firefly;apart;purred;beyond;dachshund;egret;yellow;wasp;warthog;raccoon;cursed;ostrich;camel;badger;winked;said;trout;grizzly;pill;orca;tiger;gazelle;squirrel;krill;nightingale;manta;manofwar;grunted;woodpecker;owl;robin;dolphin;cassowary;thanks;swore]
---Resultado  del map 6 
-6,[locked;flamingo;elephant;wove;human;lorikeet;into;around;including;bandicoot;waked;proved;jaguar;bee;otter;iguana;black;got;versus;toward;rhinoceros;labrador;caribou;understood;bluebird;bat;quetzal;hummingbird;woolly;caterpillar;stared;parrot;horse;globefish;chose;hen;past;at;considering;gull;lemur;fish]
---Resultado  del map 7 
-7,[barring;boa;ape;opossum;armadillo;toucan;cow;without;following;ahead;between;kangaroo;notwithstanding;seal;angelfish;chameleon;deer;unlike;reset;out;forward;hamster;depending;underneath;rat;under;echidna;roadrunner;wombat;vulture;walking;groundhog]
---Resultado  del map 8 
-8,[gorilla;over;heron;astride;cuckoo;shark;to;koala;off;baboon;naked;hawk;within;via;about;according]
---Resultado  del map 9 
-9,[despite;contrary;among;excepting;with;beside;newt;wildebeest;scorpion;crane]
---Resultado  del map 10 
-10,[alongside;from;dove;above;together;by;behind;circa;through;pending;amid;away;aboard;regardless;aside;bald]
---Resultado  del map 11 
-11,[irrespective;during;near;ladybug;onto;upon;owing;instead]
---Resultado  del map 12 
-12,[next;due;prior]
---Resultado  del map 13 
-13,[towards;beneath;for;like]
---Resultado  del map 14 
-14,[opposite;against]
---Resultado  del map 15 
-15,[close;besides;inside;other]
---Resultado  del map 16 
-16,[across]
---Resultado  del map 18 
-18,[along]
---Resultado  del map 19 
-19,[hence]
---Resultado  del map 20 
-20,[save;outside;while]
---Resultado  del map 25 
-25,[on]
---Resultado  del map 27 
-27,[thus]
---Resultado  del map 29 
-29,[but]
---Resultado  del map 30 
-30,[where;yet;when]
---Resultado  del map 32 
-32,[however]
---Resultado  del map 33 
-33,[because]
---Resultado  del map 35 
-35,[before;then;wherever;since]
---Resultado  del map 37 
-37,[therefore]
---Resultado  del map 38 
-38,[or]
---Resultado  del map 39 
-39,[up]
---Resultado  del map 40 
-40,[after]
---Resultado  del map 46 
-46,[wow]
---Resultado  del map 49 
-49,[until]
---Resultado  del map 51 
-51,[ouch]
---Resultado  del map 53 
-53,[yikes;as]
---Resultado  del map 54 
-54,[in]
---Resultado  del map 55 
-55,[jeez]
---Resultado  del map 56 
-56,[crud]
---Resultado  del map 58 
-58,[jeepers]
---Resultado  del map 59 
-59,[alas;darn;gosh]
---Resultado  del map 63 
-63,[dear]
---Resultado  del map 65 
-65,[hey]
---Resultado  del map 66 
-66,[oh;well]
---Resultado  del map 67 
-67,[hello]
---Resultado  del map 69 
-69,[so]
---Resultado  del map 83 
-83,[goodness]
---Resultado  del map 107 
-107,[some]
---Resultado  del map 122 
-122,[that]
---Resultado  del map 128 
-128,[this]
---Resultado  del map 138 
-138,[more]
---Resultado  del map 142 
-142,[one]
---Resultado  del map 143 
-143,[less]
---Resultado  del map 144 
-144,[a]
---Resultado  del map 152 
-152,[the]
---Resultado  del map 248 
-248,[and]

@@ -22,6 +22,14 @@ pthread_mutex_t lock4=PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t lock5=PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t lock6=PTHREAD_MUTEX_INITIALIZER;
 
+void clean(char *s){
+    int x=0;
+    while (*s++)
+        if((*s==201) || (*s==187)){
+            *s='\0';
+        }
+    return(x);
+}
 
 int valid_identifier_start(char ch)
 {
@@ -174,7 +182,89 @@ void print_array(WordHash **array,int size){
     }
 }
 
+void write_array(WordHash **array,int size, FILE *out){
+    for(int i=0;i<size;i++){
+        // printf("%i| WORD: %s | FREQ: %d \n",i,array[i]->word,array[i]->frequency);
+        fprintf(out,"%d,%s\n",array[i]->frequency,array[i]->word);
 
+    }
+}
+void print_array2(WordHash **array,int size){
+    printf("%d,[%s",array[0]->frequency,array[0]->word);
+    for(int i=1;i<size;i++){
+        // printf("%i| WORD: %s | FREQ: %d \n",i,array[i]->word,array[i]->frequency);
+        printf(";%s",array[i]->word);
+    }
+    printf("]\n");
+
+}
+void write_array2(WordHash **array,int size,FILE *out){
+    fprintf(out,"%d,[%s",array[0]->frequency,array[0]->word);
+    for(int i=1;i<size;i++){
+        // printf("%i| WORD: %s | FREQ: %d \n",i,array[i]->word,array[i]->frequency);
+        fprintf(out,";%s",array[i]->word);
+    }
+    fprintf(out,"]\n");
+
+}
+
+
+void *freqcounter(void * arguments){
+    // printf("ENTRA A FREQ\n");
+    MapArgs *args = (MapArgs*)arguments;
+
+    WordArray *result=(WordArray *)args->array;
+
+    WordHash **temp=NULL;
+    int size=0;
+    WordHash **new_array=calloc(sizeof(WordHash),1);
+    // wordboss=malloc(sizeof(WordArray));
+
+    int freq=(int)args->line;
+    // printf("value is %i \n",freq);
+    int starting_pos=0;
+    bool found=false;
+    while(true){
+        // printf("starting_pos is %i \n",starting_pos);
+        if(starting_pos==result->size-1){
+            // printf("FREQUENCIA no existe\n");
+            break;
+        }
+        if(result->elements[starting_pos]->frequency==freq){
+            // printf("starting_pos is %i \n",starting_pos);
+            found=true;
+            break;
+        }
+        starting_pos++;
+    }
+    if(found){
+        int pos;
+        // printf("starting_pos is %i \n",starting_pos);
+        int idx=starting_pos;
+        for(;result->elements[idx]->frequency==freq;idx++){
+            // printf("current idx is %i \n",idx);
+            pos=idx-starting_pos;
+            if(size<=pos){
+                temp=realloc(new_array,sizeof(WordHash)*(size+1));
+                    if(!temp){
+                        // NULL POINTER!, NOT ENOUGH MEMORY?
+                        free(new_array);
+                        new_array=NULL;
+                        break;
+                    }
+                    new_array=temp;
+            }
+            new_array[pos]=result->elements[idx];
+            size++;
+        }
+        // print_array(new_array,size);
+    }
+    args->array->elements=new_array;
+    args->array->size=size;
+    // printf("ASDASDSAD\n");
+    // // char *line=strcpy();
+    return 0;
+}
 
 
 void insert_sort(WordHash **arr,int n){
@@ -243,13 +333,10 @@ char * get_next_line(FILE * input_file){
             // }
         }  // EO While
 
-    tempfinal=malloc(size+1);
-    tempfinal[size]='\0';
+    // tempfinal[size]='\0';
     pthread_mutex_unlock(&lock1);
-
-    tempfinal=line;
-
-    return tempfinal;
+    line[size]='\0';
+    return line;
     } // EO Function
 
 
@@ -491,10 +578,11 @@ int number_nodes(int n_lines){
 }
 // Función principal.
 int main(int argc, char *argv[]) {   
+    // /mapreduce input.txt output.csv threads 3
     char *locale;
     locale = setlocale(LC_ALL, "");
 
-    if(argc<2){
+    if(argc<4){
 
         printf("No hay suficientes argumentos!\n");
 		return 0;
@@ -505,10 +593,9 @@ int main(int argc, char *argv[]) {
 	FILE *input_file = fopen(argv[1],"r");
 
 	/* Abrimos el archivo output en modo de escritura */
-	// FILE *output_file = fopen(argv[2], "w");
+	FILE *output_file = fopen(argv[2], "w");
 
-
-
+    int option=atoi(argv[4]);
 
     if (!input_file)
 	{
@@ -540,10 +627,10 @@ int main(int argc, char *argv[]) {
     rewind(input_file);
     int n_nodes;
     int n_reduce;
-    printf("NUMBER OF LINES: %i\n",n_lines);
+    // printf("NUMBER OF LINES: %i\n",n_lines);
     n_nodes=number_nodes(n_lines);
     n_reduce=get_reduce(n_lines);
-    printf("Number of nodes is %i \n",n_nodes);
+    // printf("Number of nodes is %i \n",n_nodes);
     height=ceil(log2(n_nodes))-1;
 
     int total_threads=n_nodes-n_lines;
@@ -671,7 +758,6 @@ int main(int argc, char *argv[]) {
         }
     }
     // delete_matrix_map(MapMatrix,n_lines);
-
     n_lines=n_reduce;
     n_reduce=get_reduce(n_lines);
     // base+=n_reduce;
@@ -740,9 +826,217 @@ int main(int argc, char *argv[]) {
 
     }
 
-    printf("DONE\n");
-    WordArray *result1=ReduceMatrix[total_threads-1]->result;
-    print_array(result1->elements,result1->size);    
+    WordArray *result1=malloc(sizeof(ReduceMatrix[total_threads-1]->result));
+    result1->elements=calloc(sizeof(WordHash),ReduceMatrix[total_threads-1]->result->size);
+    result1=ReduceMatrix[total_threads-1]->result;
+    result1->elements=ReduceMatrix[total_threads-1]->result->elements;
+
+    if(option==1){
+        write_array(result1->elements,result1->size,output_file);
+        pthread_exit(NULL); 
+        
+    }
+
+    int max_freq=result1->elements[result1->size-1]->frequency;
+    // ------------------------FUNCIONALITY 2
+
+    // int n_nodes;
+    // int n_reduce;
+    ReduceArgs ** ReduceMatrix2;
+    MapArgs ** MapMatrix2;
+    // Tiramos un map por cada frequencia
+    n_lines=max_freq-1;
+
+    // printf("NUMBER OF LINES: %i\n",n_lines);
+    n_nodes=number_nodes(n_lines);
+    n_reduce=get_reduce(n_lines);
+    // printf("Number of nodes is %i \n",n_nodes);
+
+    total_threads=n_nodes-n_lines;
+
+    
+    pthread_t maps2[n_lines];
+    pthread_t reduces2[total_threads];
+
+    
+
+        // Creamos un arreglo de arreglos (Matriz) para guardar los map
+    // WordArray **MapMatrix2=calloc(sizeof(WordArray),n_lines);
+
+    // n_lines=2;
+    MapMatrix2=calloc(sizeof(MapArgs),n_lines);
+    // init pointers
+    for(m=1;m<n_lines;m++){
+        MapMatrix2[m]=calloc(sizeof(MapArgs),1);
+        MapMatrix2[m]->line=malloc(sizeof(m));
+        MapMatrix2[m]->line=m;
+        MapMatrix2[m]->array=init_array(result1->size);
+        // Copiamos el array result
+        for(int x=0;x<result1->size;x++){
+            MapMatrix2[m]->array->elements[x]=result1->elements[x];
+        }
+        // MapMatrix2[m]->array=result1;
+        line=NULL;
+    }
+    for(m=1;m<n_lines;m++){
+        // printf("map created %i \n",m);
+        if(pthread_create(&maps2[m], NULL, (void *)freqcounter, (void*)MapMatrix2[m])) {
+            fprintf(stderr, "Error creating thread\n");
+        return 1;
+        }
+    }
+
+    for(m=1;m<n_lines;m++){
+        // Para cada map, hacemos un join para esperarlos
+        if(pthread_join(maps2[m], NULL) ){
+            fprintf(stderr, "Error joining thread\n");
+            return 2;
+        }
+
+        if (MapMatrix2[m]->array->size>0){
+            // printf("--Resultado  del map %i \n",m);
+            write_array2(MapMatrix2[m]->array->elements,MapMatrix2[m]->array->size,output_file);
+        }
+
+    }
+
+    // fclose(input_file);
+
+    // print_array(MapMatrix2[0]->array->elements,MapMatrix2[0]->array->size);
+ 
+    // free(assigned);
+    // assigned=NULL;
+
+    // ReduceMatrix2=calloc(sizeof(ReduceArgs),total_threads);
+    
+    // aux_r=0;
+ 
+    // maps_assigned=0;
+    // asigned_maps=&maps_assigned;
+
+    // free(availability_array);
+    // availability_array=calloc(sizeof(bool),total_threads);
+
+    // for(r=0;r<n_reduce;r++){
+    //     // printf("Se crea el Reduce %i \n",r);
+       
+    //     ReduceMatrix2[r]=malloc(sizeof(ReduceArgs));
+    //     assigned=get_asigned_maps(n_lines,n_reduce,r,asigned_maps);
+    //     // ReduceMatrix2[r]->array1=malloc(sizeof(MapMatrix2[assigned[0]]->array));
+    //     ReduceMatrix2[r]->array1=init_array(MapMatrix2[assigned[0]]->array->size);
+    //     ReduceMatrix2[r]->array1=MapMatrix2[assigned[0]]->array;
+    //     // printf("El Reduce %i Recibe array1\n",r);
+    //     // print_array(ReduceMatrix2[r]->array1->elements,ReduceMatrix2[r]->array1->size);
+
+    //     if(assigned[1]!=-1){
+    //         ReduceMatrix2[r]->array2=init_array(MapMatrix2[assigned[1]]->array->size);
+    //         ReduceMatrix2[r]->array2=MapMatrix2[assigned[1]]->array;
+    //         pthread_create(&reduces2[r],NULL,(void *)reduce,(void*)ReduceMatrix2[r]);
+    //         //  printf("El Reduce %i Recibe array2\n",r);
+    //         // print_array(ReduceMatrix2[r]->array2->elements,ReduceMatrix2[r]->array2->size);
+    //     }
+    //     else{
+    //         ReduceMatrix2[r]->array2=NULL;
+    //         // No es necesario hacer un thread
+    //         ReduceMatrix2[r]->result=init_array(MapMatrix2[assigned[0]]->array->size);
+    //         ReduceMatrix2[r]->result=MapMatrix2[assigned[0]]->array;
+    //     }
+
+    //     aux_r++;
+
+    //     // strcpy(ReduceMatrix2[m]->line,line);
+        
+    //     // current_reduce++;
+    // }
+    //     // Join threads
+
+    // // int maps_assigned=0;
+    // *asigned_maps=0;
+    // aux_r=0;
+    // for(r=0;r<n_reduce;r++){
+    //     // Para cada map, hacemos un join para esperarlos
+    //     assigned=get_asigned_maps(n_lines,n_reduce,r,asigned_maps);
+    //         availability_array[r]=true;
+
+    //     if(assigned[1]!=-1){
+    //         if(pthread_join(reduces2[r], NULL) ){
+    //             fprintf(stderr, "Error joining thread\n");
+    //             return 2;
+    //         }
+    //         // printf("--START Resultado  del reduce %i \n",r);
+    //         // print_array(ReduceMatrix2[r]->result->elements,ReduceMatrix2[r]->result->size);
+    //         // printf("--END Resultado  del reduce %i \n",r);
+    //     }
+    // }
+    // // delete_matrix_map(MapMatrix,n_lines);
+
+    // n_lines=n_reduce;
+    // n_reduce=get_reduce(n_lines);
+    // // base+=n_reduce;
+    // height-=1;
+        
+    // value=n_lines;
+    // aux_r=0;
+
+    // while(availability_array[total_threads-1]!=true){
+    //     // maps=realloc(maps,sizeof(pthread_t)*n_lines);
+    //     // reduces2=realloc(reduces2,sizeof(pthread_t)*n_reduce);
+    //     for(r=value;r<n_reduce+value;r++){
+    //         // printf("Se crea el Reduce %i \n",r);
+    //         ReduceMatrix2[r]=malloc(sizeof(ReduceArgs));
+    //         assigned=get_asigned_reduce(availability_array,total_threads);
+    //         // availability_array[assigned[0]]=true;
+    //         // availability_array[assigned[1]]=true;
+    //         ReduceMatrix2[r]->array1=malloc(sizeof(ReduceMatrix2[assigned[0]]->result));
+    //         ReduceMatrix2[r]->array1=ReduceMatrix2[assigned[0]]->result;
+
+    //         if(assigned[1]!=-1){
+    //             ReduceMatrix2[r]->array2=malloc(sizeof(ReduceMatrix2[assigned[1]]->result));
+    //             ReduceMatrix2[r]->array2=ReduceMatrix2[assigned[1]]->result;
+    //             ReduceMatrix2[r]->result=malloc(sizeof(WordArray));
+
+    //             pthread_create(&reduces2[r],NULL,(void *)reduce,(void*)ReduceMatrix2[r]);
+                
+    //         }
+    //         else{
+    //             ReduceMatrix2[r]->array2=NULL;
+
+    //             // No es necesario hacer un thread
+    //             ReduceMatrix2[r]->result=malloc(sizeof(ReduceMatrix2[assigned[0]]->result));
+    //             ReduceMatrix2[r]->result=ReduceMatrix2[assigned[0]]->result;
+    //         }
+
+    //         // strcpy(ReduceMatrix2[m]->line,line);
+            
+    //         // current_reduce++;
+    //     }
+    //     // Join threads
+        
+    //     for(m=value;m<n_reduce+value;m++){
+    //         // Para cada map, hacemos un join para esperarlos
+    //         // printf("value is %i \n",m);
+    //         // assigned=get_asigned_reduce(availability_array,total_threads);
+           
+    //         availability_array[m]=true;
+
+    //         if(ReduceMatrix2[m]->array2!=NULL){
+    //             if(pthread_join(reduces2[m], NULL) ){
+    //                 fprintf(stderr, "Error joining thread\n");
+    //                 return 2;
+    //             }
+
+    //             //  printf("--START Resultado  del reduce %i \n",m);
+    //             //  print_array(ReduceMatrix2[m]->result->elements,ReduceMatrix[m]->result->size);
+    //             //  printf("--END Resultado  del reduce %i \n",m);
+    //         }
+    //     }
+    //     // remaining_threads-=n_reduce;
+    //     value+=n_reduce;
+
+    //     n_lines=n_reduce;
+    //     n_reduce=get_reduce(n_lines);
+
+    // }
    pthread_exit(NULL); 
 
 }
