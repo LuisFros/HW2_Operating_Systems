@@ -5,12 +5,15 @@
 #include <stdbool.h> 
 
 
-WordHash ** init_array(int n_words){
+WordArray * init_array(int n_words){
+    WordArray *new_array=malloc(sizeof(WordArray));
     // Inicalizamos un array de tamaño 10 
     WordHash **wordarray=malloc(sizeof(WordHash)*n_words);
     for(int i=0;i<n_words;i++){
-        wordarray[i]=malloc(sizeof(WordHash));
+        wordarray[i]=calloc(sizeof(WordHash),1);
+        // *wordarray[i]->word=NULL;
     }
-    
-    return wordarray;
+    new_array->elements=wordarray;
+    new_array->size=n_words;
+    return new_array;
 }

@@ -20,5 +20,5 @@ typedef struct WordArray
 }WordArray;
 
 
-WordHash ** init_array(int n_words);
+WordArray * init_array(int n_words);
 
